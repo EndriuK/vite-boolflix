@@ -1,5 +1,6 @@
 <script>
 import { store } from '../store.js';
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 export default {
     
     data () {
@@ -22,6 +23,7 @@ export default {
         </ul> 
 
     </div>
+    
 </template>
 <style lang="">
     
