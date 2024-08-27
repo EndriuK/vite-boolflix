@@ -1,19 +1,16 @@
+
 <script>
 import AppCard from './AppCard.vue';
 
 export default {
-    
     components: {
         AppCard,
     },
-    
 }
-
 </script>
-<template>
 
-        <AppCard />
+<template>
+    <AppCard />
 </template>
-<style lang="">
-    
-</style>
+
+<style lang=""></style>
