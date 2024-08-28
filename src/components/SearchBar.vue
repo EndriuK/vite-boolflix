@@ -1,61 +1,66 @@
 
-
-<script>
+ <script>
 import { store } from '../store.js';
 
 export default {
-    data() {
-        return {
-            searchQuery: '',
-            store,
-        };
+  data() {
+    return {
+      searchQuery: '',
+      store,
+    };
+  },
+  methods: {
+    searchContent() {
+      if (this.searchQuery.toLowerCase()) {
+        store.searchAll(this.searchQuery).catch(error => {
+          console.error("Errore nella ricerca:", error);
+        });
+      }
     },
-
-    methods: {
-        searchContent() {
-            if (this.searchQuery.toLowerCase) {
-                store.searchMovie(this.searchQuery)
-                    .then(movieResults => {
-                        return store.searchSeries(this.searchQuery)
-                            .then(seriesResults => {
-                                this.store.results = [...movieResults, ...seriesResults];
-                            });
-                    })
-                    .catch(error => {
-                        console.error("Errore nella ricerca:", error);
-                    });
-            }
-        },
-
-        handleKeyDown(event) {
-            if (event.key === 'Enter') {
-                this.searchContent();
-            }
-        }
-    }
+    handleKeyDown(event) {
+      if (event.key === 'Enter') {
+        this.searchContent();
+      }
+    },
+  },
 };
 </script>
 
 <template>
-    <div>
-        <input 
-            v-model="searchQuery" 
-            placeholder="Cerca un film o una serie..." 
-            @keydown="handleKeyDown"
-        />
-        <button @click="searchContent">Cerca</button>
-
-        <div v-if="store.results.length > 0">
-            <h2>Risultati della ricerca:</h2>
-            <ul>
-                <li v-for="item in store.results" :key="item.id">
-                    {{ item.title || item.name }} ({{ item.vote_average }})
-                    ({{ item.original_title }}) ({{ item.original_language }})
-                </li>
-            </ul>
-        </div>
-    </div>
+  <div class="search-bar">
+    <input 
+      v-model="searchQuery" 
+      placeholder="Cerca un film o una serie..." 
+      @keydown="handleKeyDown"
+    />
+    <button @click="searchContent">Cerca</button>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.search-bar {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
 
+.search-bar input {
+  width: 300px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.search-bar button {
+  padding: 0.5rem 1rem;
+  background-color: #e50914;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #f40612;
+}
+</style>
